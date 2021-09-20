@@ -2,37 +2,41 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/***************************** Login *******************/
+.login-wrapper {
+  width: 30rem;
+  margin: 20% auto;
+  border: 1px solid gray;
+  border-radius: 1rem;
+  padding: 1rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.input-box {
+  width: 100%;
+  margin: 0.5rem 0 !important;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.exam-form {
+  width: 30rem;
+  margin: 1rem auto;
+  border: 1px solid rgb(224, 221, 221);
+  border-radius: 0.5rem;
+  padding: 1rem;
 }
 
-.App-link {
-  color: #61dafb;
+select {
+  width: 100%;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+textarea {
+  width: 100%;
+}
+
+.exam-paper-btn {
+  width: 5.5rem;
+  margin: 0.3rem 0.5rem;
+}
+
+.ans-radio {
+  margin-left: 3.8rem;
 }
