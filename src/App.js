@@ -1,6 +1,6 @@
 import "./App.css";
 import { Login, Signup } from "./auth";
-import { CreateExam } from "./container";
+import { CreateExam, ViewExam, ExamDetails } from "./container";
 import "bootstrap/dist/css/bootstrap.css";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
@@ -16,7 +16,9 @@ const App = () => {
           <Switch>
             <Route path="/signup" component={Signup} exact={true} />
             <Route path="/" component={Login} exact={true} />
-            <Route path="/createexam" component={CreateExam} exact={true} />
+            <Route path="/createExam" component={CreateExam} exact={true} />
+            <Route path="/viewexam" component={ViewExam} exact={true} />
+            <Route path="/examdetails" component={ExamDetails} exact={true} />
           </Switch>
         </Router>
         <ToastContainer

@@ -341,8 +341,18 @@ import { FormGroup } from "reactstrap";
 import { Button } from "reactstrap";
 import { createExampaper } from "../redux/actions";
 import { useDispatch } from "react-redux";
+import { useValidation } from "../reusableFunction";
+import { validate } from "../reusableFunction";
 
 const CreateExam = () => {
+  // const { values, errors, handleChange, handleNext } = useValidation(
+  //   next,
+  //   validate
+  // );
+
+  // function next() {
+  //   console.log("No errors, submit callback called!");
+  // }
   const [current, setCurrent] = useState(1);
   const [action, setAction] = useState("");
   const [formData, updateFormData] = useState({
@@ -351,7 +361,7 @@ const CreateExam = () => {
       {
         question: "",
         answer: "",
-        options: [{ optionA: "", optionB: "", optionC: "", optionD: "" }],
+        options: ["", "", "", ""],
       },
     ],
     // question: "",
@@ -360,10 +370,10 @@ const CreateExam = () => {
     // optionB: "",
     // optionC: "",
     // optionD: "",
+    activeIndex: 0,
   });
   const [quetionId, setQuetionId] = useState("");
   const [allQueData, setAllQueData] = useState([]);
-  const [msg, setMsg] = useState("");
   const indexLength = allQueData.length;
 
   const dispatch = useDispatch();
@@ -371,7 +381,23 @@ const CreateExam = () => {
   const { subjectName, question, optionA, optionB, optionC, optionD, answer } =
     formData;
 
-  const handleChange = (e, i) => {
+  const handleChange = (param) => (e) => {
+    console.log("param", param);
+    console.log("event", e);
+    console.log("hello");
+    const clonedState = [...formData];
+    const { name, value } = e.target;
+    if (param) {
+      clonedState[name] = value;
+    } else {
+      if (name === "options") {
+        clonedState.questions[clonedState.activeIndex][name][param] = value;
+      } else {
+        clonedState.questions[clonedState.activeIndex][name] = value;
+      }
+    }
+    updateFormData(clonedState);
+    console.log("formdata", formData);
     // updateFormData((prevValue) => {
     //   return { ...prevValue, [e.target.name]: e.target.value };
     // });
@@ -384,52 +410,29 @@ const CreateExam = () => {
     // // updateFormData({ ...formData, [e.target.name]: e.target.value });
     // console.log("form", formData);
 
-    const name = e.target.name;
+    // const name = e.target.name;
+    // const value = e.target.value;
+
     // console.log(name)
-    updateFormData((prevState) => ({
-      formData: {
-        ...prevState.formData,
-        [name]: e.target.value,
+    // updateFormData((prevState) => ({
+    //   formData: {
+    //     ...prevState.formData,
+    //     [name]: e.target.value,
 
-        questions: {
-          ...prevState.questions,
-        },
-      },
-    }));
-    console.log("fff", formData);
-  };
+    //     questions: {
+    //       ...prevState.questions,
+    //     },
+    //   },
+    // }));
+    // console.log("fff", formData);
 
-  const handleAdd = (event) => {
-    // event.preventDefault();
-    // const queData = {
-    //   id: indexLength + 1,
-    //   question,
-    //   answer,
-    //   options: [optionA, optionB, optionC, optionD],
-    // };
-    // console.log("que", queData);
-    // if (quetionId) {
-    //   console.log("id", quetionId);
-    //   const addData = {
-    //     id: quetionId,
-    //     question,
-    //     answer,
-    //     options: [optionA, optionB, optionC, optionD],
-    //   };
-    //   const index = quetionId - 1;
-    //   let allQuestion = allQueData;
-    //   allQuestion[index] = addData;
-    //   const addQueData = { subjectName, questions: allQuestion };
-    //   localStorage.setItem("ExamQuestion", JSON.stringify(addQueData));
-    //   setAllQueData(allQuestion);
-    //   // setQuetionId("");
-    // } else if (indexLength < 15) {
-    //   setAllQueData([...allQueData, queData]);
-    //   setCurrent(allQueData.length + 2);
-    //   console.log("dsf", allQueData);
-    //   console.log("c", current);
-    // }
-    // clear();
+    // updateFormData({
+    //   ...formData,
+    //   [e.target.name]: e.target.value,
+    //   questions: [{ [e.target.name]: e.target.value }],
+    // });
+
+    // console.log("fff", formData);
   };
 
   useEffect(() => {
@@ -459,33 +462,10 @@ const CreateExam = () => {
     }
   }, []);
 
-  const validation = () => {
-    if (!subjectName) {
-      alert("SubjectName is required");
-      return false;
-    } else if (!question) {
-      alert("Question is required");
-      return false;
-    } else if (!optionA) {
-      alert("OptionA is required");
-      return false;
-    } else if (!optionB) {
-      alert("OptionB is required");
-      return false;
-    } else if (!optionC) {
-      alert("OptionC is required");
-      return false;
-    } else if (!optionD) {
-      alert("OptionD is required");
-      return false;
-    } else if (!answer) {
-      alert("Answer is required");
-      return false;
-    }
-  };
-
   const handleNext = (e) => {
-    e.preventDefault();
+    if (e) e.preventDefault();
+    // setErrors(validate(formData));
+    // setIsSubmitting(true);
     setAction("next");
 
     const queData = {
@@ -496,7 +476,6 @@ const CreateExam = () => {
     };
     console.log("que", queData);
 
-    // if (validation()) {
     if (quetionId) {
       console.log("id", quetionId);
       const addData = {
@@ -518,7 +497,6 @@ const CreateExam = () => {
       setAllQueData([...allQueData, queData]);
       setCurrent(allQueData.length + 2);
     }
-    // }
 
     const addQueData = JSON.parse(localStorage.getItem("ExamQuestion"));
     if (current < indexLength) {
@@ -660,7 +638,7 @@ const CreateExam = () => {
               <label>Subject:</label>
               <select
                 name="subjectName"
-                onChange={handleChange}
+                onChange={handleChange()}
                 disabled={formData.subjectName}
               >
                 <option value="">Select</option>
@@ -671,7 +649,9 @@ const CreateExam = () => {
                 <option value="ReactJs">ReactJs</option>
                 <option value="python">Python</option>
               </select>
-              {msg}
+              {/* {errors.subjectName && (
+                <p className="text-danger">{errors.subjectName}</p>
+              )} */}
             </FormGroup>
             <FormGroup className="my-3">
               <label>Question:</label>
@@ -679,11 +659,13 @@ const CreateExam = () => {
                 type="textarea"
                 name="question"
                 placeholder="Question"
-                onChange={handleChange}
+                onChange={handleChange()}
                 rows="3"
                 value={question}
               />
-              {msg}
+              {/* {errors.question && (
+                <p className="text-danger">{errors.question}</p>
+              )} */}
             </FormGroup>
             <FormGroup className="my-3">
               <div className="row">
@@ -696,18 +678,20 @@ const CreateExam = () => {
                     name="answer"
                     className="mr-1"
                     checked={optionA === answer}
-                    onChange={handleChange}
+                    onChange={handleChange()}
                     value={optionA}
                   />
 
                   <input
                     type="text"
                     name="optionA"
-                    onChange={handleChange}
+                    onChange={handleChange()}
                     className="mr-5"
                     value={optionA}
-                    required
                   />
+                  {/* {errors.optionA && (
+                    <p className="text-danger">{errors.optionA}</p>
+                  )} */}
                 </div>
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10 ">
@@ -717,15 +701,19 @@ const CreateExam = () => {
                     checked={optionB === answer}
                     className="mr-1"
                     value={optionB}
-                    onChange={handleChange}
+                    onChange={handleChange()}
                   />
+
                   <input
                     type="text"
                     name="optionB"
-                    onChange={handleChange}
+                    onChange={handleChange()}
                     className="mr-5"
                     value={optionB}
                   />
+                  {/* {errors.optionB && (
+                    <p className="text-danger">{errors.optionB}</p>
+                  )} */}
                 </div>
                 <br></br>
                 <div className="col-sm-2"></div>
@@ -735,16 +723,19 @@ const CreateExam = () => {
                     name="answer"
                     checked={optionC === answer}
                     className="mr-1"
-                    onChange={handleChange}
+                    onChange={handleChange()}
                     value={optionC}
                   />
                   <input
                     type="text"
                     name="optionC"
-                    onChange={handleChange}
+                    onChange={handleChange()}
                     className="mt-2"
                     value={optionC}
                   />
+                  {/* {errors.optionC && (
+                    <p className="text-danger">{errors.optionC}</p>
+                  )} */}
                 </div>
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10 ">
@@ -753,16 +744,19 @@ const CreateExam = () => {
                     name="answer"
                     checked={optionD === answer}
                     className="mr-1"
-                    onChange={handleChange}
+                    onChange={handleChange()}
                     value={optionD}
                   />
                   <input
                     type="text"
                     name="optionD"
-                    onChange={handleChange}
+                    onChange={handleChange()}
                     className="mt-2"
                     value={optionD}
                   />
+                  {/* {errors.optionD && (
+                    <p className="text-danger">{errors.optionD}</p>
+                  )} */}
                 </div>
               </div>
             </FormGroup>

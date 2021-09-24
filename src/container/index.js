@@ -1,3 +1,5 @@
 import CreateExam from "./CreateExam";
+import ViewExam from "./ViewExam";
+import ExamDetails from "./ExamDetails";
 
-export { CreateExam };
+export { CreateExam, ViewExam, ExamDetails };

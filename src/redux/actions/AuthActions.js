@@ -21,7 +21,7 @@ export const login = (data, history) => {
           localStorage.setItem("jwt", res.data.data.token);
           console.log(res.data.data.token);
           toast.success(res.data.message);
-          history.push("/createexam");
+          history.push("/createExam");
         } else {
           toast.error(res.data.message);
         }

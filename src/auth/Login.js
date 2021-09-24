@@ -4,11 +4,12 @@ import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { ErrorMessage } from "@hookform/error-message";
 import { login } from "../redux/actions";
+import { Link } from "react-router-dom";
 
-const isValidEmail = (email) =>
-  /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-    email
-  );
+// const isValidEmail = (email) =>
+//   /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+//     email
+//   );
 
 const Login = () => {
   const {
@@ -23,17 +24,15 @@ const Login = () => {
   };
   //   console.log(errors);
 
-  const handleEmailValidation = (email) => {
-    const isValid = isValidEmail(email);
-
-    const validityChanged =
-      (errors.email && isValid) || (!errors.email && !isValid);
-    if (validityChanged) {
-      console.log("Fire tracker with", isValid ? "Valid" : "Invalid");
-    }
-
-    return isValid;
-  };
+  // const handleEmailValidation = (email) => {
+  //   const isValid = isValidEmail(email);
+  //   const validityChanged =
+  //     (errors.email && isValid) || (!errors.email && !isValid);
+  //   if (validityChanged) {
+  //     console.log("Fire tracker with", isValid ? "Valid" : "Invalid");
+  //   }
+  //   return isValid;
+  // };
 
   return (
     <div className="container">
@@ -80,6 +79,7 @@ const Login = () => {
           />
           <input type="submit" className="input-box" />
         </form>
+        Don't have account?<Link to="signup">Sign Up</Link>
       </div>
     </div>
   );
