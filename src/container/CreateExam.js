@@ -382,12 +382,9 @@ const CreateExam = () => {
     formData;
 
   const handleChange = (param) => (e) => {
-    console.log("param", param);
-    console.log("event", e);
-    console.log("hello");
-    const clonedState = [...formData];
+    const clonedState = { ...formData };
     const { name, value } = e.target;
-    if (param) {
+    if (param === "subjectName") {
       clonedState[name] = value;
     } else {
       if (name === "options") {
@@ -397,7 +394,8 @@ const CreateExam = () => {
       }
     }
     updateFormData(clonedState);
-    console.log("formdata", formData);
+    console.log("formdata are", formData);
+
     // updateFormData((prevValue) => {
     //   return { ...prevValue, [e.target.name]: e.target.value };
     // });
@@ -581,7 +579,7 @@ const CreateExam = () => {
       allQuestion[index] = addData;
       const addQueData = { subjectName, questions: allQuestion };
 
-      localStorage.setItem("ExamQuestion", JSON.stringify(addQueData));
+      // localStorage.setItem("ExamQuestion", JSON.stringify(addQueData));
       setAllQueData(allQuestion);
       setQuetionId("");
     } else if (indexLength < 15) {
@@ -622,7 +620,10 @@ const CreateExam = () => {
     dispatch(createExampaper(finalQueData));
     localStorage.removeItem("ExamQuestion");
   };
-
+  // console.log(
+  //   "formData.questions[formData.activeIndex] :>> ",
+  //   formData.questions[formData.activeIndex].options
+  // );
   return (
     <div className="container">
       <div className="mt-5 ">
@@ -638,7 +639,7 @@ const CreateExam = () => {
               <label>Subject:</label>
               <select
                 name="subjectName"
-                onChange={handleChange()}
+                onChange={handleChange("subjectName")}
                 disabled={formData.subjectName}
               >
                 <option value="">Select</option>
@@ -668,101 +669,44 @@ const CreateExam = () => {
               )} */}
             </FormGroup>
             <FormGroup className="my-3">
-              <div className="row">
-                <div className="col-sm-2">
-                  <label>Options: </label>
-                </div>
-                <div className="col-sm-10">
-                  <input
-                    type="radio"
-                    name="answer"
-                    className="mr-1"
-                    checked={optionA === answer}
-                    onChange={handleChange()}
-                    value={optionA}
-                  />
+              {formData.questions[formData.activeIndex].options.map((d, i) => {
+                return (
+                  <div className="row" key={i}>
+                    <div className="col-sm-2">
+                      <label>Options: </label>
+                    </div>
+                    <div className="col-sm-10">
+                      <input
+                        type="radio"
+                        name="answer"
+                        className="mr-1"
+                        // checked={formData.options === answer}
+                        onChange={handleChange(i)}
+                        value={d}
+                      />
 
-                  <input
-                    type="text"
-                    name="optionA"
-                    onChange={handleChange()}
-                    className="mr-5"
-                    value={optionA}
-                  />
-                  {/* {errors.optionA && (
+                      <input
+                        type="text"
+                        name="options"
+                        onChange={handleChange(i)}
+                        className="mr-5"
+                        value={d}
+                      />
+                      {/* {errors.optionA && (
                     <p className="text-danger">{errors.optionA}</p>
                   )} */}
-                </div>
-                <div className="col-sm-2"></div>
-                <div className="col-sm-10 ">
-                  <input
-                    type="radio"
-                    name="answer"
-                    checked={optionB === answer}
-                    className="mr-1"
-                    value={optionB}
-                    onChange={handleChange()}
-                  />
-
-                  <input
-                    type="text"
-                    name="optionB"
-                    onChange={handleChange()}
-                    className="mr-5"
-                    value={optionB}
-                  />
-                  {/* {errors.optionB && (
-                    <p className="text-danger">{errors.optionB}</p>
-                  )} */}
-                </div>
-                <br></br>
-                <div className="col-sm-2"></div>
-                <div className="col-sm-10 ">
-                  <input
-                    type="radio"
-                    name="answer"
-                    checked={optionC === answer}
-                    className="mr-1"
-                    onChange={handleChange()}
-                    value={optionC}
-                  />
-                  <input
-                    type="text"
-                    name="optionC"
-                    onChange={handleChange()}
-                    className="mt-2"
-                    value={optionC}
-                  />
-                  {/* {errors.optionC && (
-                    <p className="text-danger">{errors.optionC}</p>
-                  )} */}
-                </div>
-                <div className="col-sm-2"></div>
-                <div className="col-sm-10 ">
-                  <input
-                    type="radio"
-                    name="answer"
-                    checked={optionD === answer}
-                    className="mr-1"
-                    onChange={handleChange()}
-                    value={optionD}
-                  />
-                  <input
-                    type="text"
-                    name="optionD"
-                    onChange={handleChange()}
-                    className="mt-2"
-                    value={optionD}
-                  />
-                  {/* {errors.optionD && (
-                    <p className="text-danger">{errors.optionD}</p>
-                  )} */}
-                </div>
-              </div>
+                    </div>
+                  </div>
+                );
+              })}
             </FormGroup>
             <FormGroup className="my-3">
               <label>Answer: </label>
-              <label>{answer}</label>
+              <label>
+                {formData.questions.map((list) => (
+                  <>{list.answer}</>
+                ))}
+              </label>
             </FormGroup>
 
             <Button
