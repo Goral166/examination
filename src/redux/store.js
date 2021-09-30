@@ -5,6 +5,9 @@ import {
   exampaperReducers,
   viewExamReducers,
   examDetailsReducers,
+  allStudentReducers,
+  viewStudentReducers,
+  studentExamReducers,
 } from "./reducers";
 
 const rootReducer = combineReducers({
@@ -12,6 +15,9 @@ const rootReducer = combineReducers({
   exampaperReducers,
   viewExamReducers,
   examDetailsReducers,
+  allStudentReducers,
+  viewStudentReducers,
+  studentExamReducers,
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk));

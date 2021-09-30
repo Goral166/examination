@@ -1,46 +1,45 @@
 import {
-  EXAM_DETAILS_PENDING,
-  EXAM_DETAILS_SUCCESS,
-  EXAM_DETAILS_FAILURE,
+  ALL_STUDENT_PENDING,
+  ALL_STUDENT_SUCCESS,
+  ALL_STUDENT_FAILURE,
 } from "../constants";
-
 const initialState = {
-  getSingleData: {
+  allStudentDetails: {
     loading: false,
-    singleData: null,
+    studentData: null,
     error: false,
     message: null,
   },
 };
 
-const examDetailsReducers = (state = initialState, action) => {
+const allStudentReducers = (state = initialState, action) => {
   switch (action.type) {
-    case EXAM_DETAILS_PENDING:
+    case ALL_STUDENT_PENDING:
       return {
         ...state,
-        getSingleData: {
+        allStudentDetails: {
           loading: true,
-          singleData: null,
+          studentData: null,
           error: false,
           message: null,
         },
       };
-    case EXAM_DETAILS_SUCCESS:
+    case ALL_STUDENT_SUCCESS:
       return {
         ...state,
-        getSingleData: {
+        allStudentDetails: {
           loading: false,
-          singleData: action.singleData,
+          studentData: action.studentData,
           error: false,
           message: null,
         },
       };
-    case EXAM_DETAILS_FAILURE:
+    case ALL_STUDENT_FAILURE:
       return {
         ...state,
-        getSingleData: {
+        allStudentDetails: {
           loading: false,
-          singleData: null,
+          studentData: null,
           error: true,
           message: action.message,
         },
@@ -51,4 +50,4 @@ const examDetailsReducers = (state = initialState, action) => {
   }
 };
 
-export default examDetailsReducers;
+export default allStudentReducers;

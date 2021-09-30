@@ -2,6 +2,10 @@
   text-align: center;
 }
 
+.ml-6 {
+  margin-left: 1rem !important;
+}
+
 /***************************** Login *******************/
 .login-wrapper {
   width: 30rem;
@@ -39,4 +43,8 @@ textarea {
 
 .ans-radio {
   margin-left: 3.8rem;
+}
+
+.btn-secondary {
+  margin-left: 0.5rem;
 }

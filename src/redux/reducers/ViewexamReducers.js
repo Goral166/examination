@@ -1,3 +1,11 @@
+import {
+  VIEW_EXAM_PENDING,
+  VIEW_EXAM_SUCCESS,
+  VIEW_EXAM_FAILURE,
+  DELETE_EXAM_PENDING,
+  DELETE_EXAM_SUCCESS,
+  DELETE_EXAM_FAILURE,
+} from "../constants";
 const initialState = {
   viewExamDetails: {
     loading: false,
@@ -5,11 +13,12 @@ const initialState = {
     error: false,
     message: null,
   },
+  deleteExam: { loading: false, error: false, message: null },
 };
 
 const viewExamReducers = (state = initialState, action) => {
   switch (action.type) {
-    case "VIEW_EXAM_PENDING":
+    case VIEW_EXAM_PENDING:
       return {
         ...state,
         viewExamDetails: {
@@ -19,7 +28,7 @@ const viewExamReducers = (state = initialState, action) => {
           message: null,
         },
       };
-    case "VIEW_EXAM_SUCCESS":
+    case VIEW_EXAM_SUCCESS:
       return {
         ...state,
         viewExamDetails: {
@@ -29,7 +38,7 @@ const viewExamReducers = (state = initialState, action) => {
           message: null,
         },
       };
-    case "VIEW_EXAM_FAILURE":
+    case VIEW_EXAM_FAILURE:
       return {
         ...state,
         viewExamDetails: {
@@ -38,6 +47,21 @@ const viewExamReducers = (state = initialState, action) => {
           error: true,
           message: action.message,
         },
+      };
+    case DELETE_EXAM_PENDING:
+      return {
+        ...state,
+        deleteExam: { loading: true, error: false, message: null },
+      };
+    case DELETE_EXAM_SUCCESS:
+      return {
+        ...state,
+        deleteExam: { loading: false, error: false, message: null },
+      };
+    case DELETE_EXAM_FAILURE:
+      return {
+        ...state,
+        deleteExam: { loading: false, error: true, message: action.message },
       };
 
     default:

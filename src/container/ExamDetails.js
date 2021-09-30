@@ -1,7 +1,7 @@
 import react, { useEffect } from "react";
 import { Table } from "reactstrap";
-import { examDetails } from "../redux/actions";
-import { useDispatch, useSelector } from "react-redux";
+
+import { useSelector } from "react-redux";
 
 const ExamDetails = () => {
   const { loading, singleData } = useSelector((state) => ({

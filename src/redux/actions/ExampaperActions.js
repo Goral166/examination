@@ -1,12 +1,17 @@
 import axios from "axios";
 import { config } from "../../common";
 import { toast } from "react-toastify";
+import {
+  EXAM_PAPER_PENDING,
+  EXAM_PAPER_SUCCESS,
+  EXAM_PAPER_FAILURE,
+} from "../constants";
 
 export const createExampaper = (data, history) => {
   const getToken = localStorage.getItem("jwt");
 
   return (dispatch) => {
-    dispatch({ type: "EXAM_PAPER_PENDING" });
+    dispatch({ type: EXAM_PAPER_PENDING });
 
     axios
       .post(`${config.apiUrl}/dashboard/Teachers/Exam`, data, {
@@ -17,13 +22,13 @@ export const createExampaper = (data, history) => {
       })
       .then((res) => {
         dispatch({
-          type: "EXAM_PAPER_SUCCESS",
+          type: EXAM_PAPER_SUCCESS,
         });
         toast.success(res.data.message);
       })
       .catch((error) => {
         dispatch({
-          type: "EXAM_PAPER_FAILURE",
+          type: EXAM_PAPER_FAILURE,
           message: error.message,
         });
       });

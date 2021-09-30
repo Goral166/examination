@@ -6,11 +6,6 @@ import { ErrorMessage } from "@hookform/error-message";
 import { login } from "../redux/actions";
 import { Link } from "react-router-dom";
 
-// const isValidEmail = (email) =>
-//   /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-//     email
-//   );
-
 const Login = () => {
   const {
     register,
@@ -19,20 +14,10 @@ const Login = () => {
   } = useForm();
   const dispatch = useDispatch();
   const history = useHistory();
+
   const onSubmit = (data) => {
     dispatch(login(data, history));
   };
-  //   console.log(errors);
-
-  // const handleEmailValidation = (email) => {
-  //   const isValid = isValidEmail(email);
-  //   const validityChanged =
-  //     (errors.email && isValid) || (!errors.email && !isValid);
-  //   if (validityChanged) {
-  //     console.log("Fire tracker with", isValid ? "Valid" : "Invalid");
-  //   }
-  //   return isValid;
-  // };
 
   return (
     <div className="container">
@@ -77,9 +62,11 @@ const Login = () => {
               <div className="text-danger">{message}</div>
             )}
           />
+            <Link to="forgotpassword">Forgot Password?</Link>
           <input type="submit" className="input-box" />
+        
         </form>
-        Don't have account?<Link to="signup">Sign Up</Link>
+        Don't have account yet?<Link to="signup">Sign Up</Link>
       </div>
     </div>
   );

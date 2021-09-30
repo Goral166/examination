@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useHistory } from "react-router-dom";
+import { useHistory,Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { ErrorMessage } from "@hookform/error-message";
 import { registration } from "../redux/actions";
@@ -84,6 +84,7 @@ const Signup = () => {
             )}
           />
           <input type="submit" className="input-box" />
+          <div>already have an account? <Link to="/">Login</Link></div>
         </form>
       </div>
     </div>
